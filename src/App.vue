@@ -1,35 +1,66 @@
 <template>
-  <div>
-    Work hello !
-    <button>Click me!</button>
-    <button v-on:click='addLike'>Like</button>
-    <button @click='addDislike'>Dislike</button>
-    <div>Likes count is <strong>{{ likes }}</strong></div>
-    <div>Dislikes count is <strong>{{ dislikes }}</strong></div>
-    <input type='text'>
-    <textarea name='' cols='30' rows='10'></textarea>
+  <div class='app'>
+    <PostForm />
+    <post-list v-bind:posts='posts'/>
   </div>
 </template>
 
 <script>
+import PostForm from '@/components/PostForm';
+import PostList from '@/components/PostList';
+
 export default {
+  components: {
+    PostForm, PostList
+  },
   data() {
     return {
-      likes: 5,
-      dislikes: 0,
+      posts: [
+        {
+          id: 1,
+          title: 'Javascript',
+          body: 'Описание поста',
+        },
+        {
+          id: 2,
+          title: 'Javascript 2',
+          body: 'Описание поста 2',
+        },
+        {
+          id: 3,
+          title: 'Javascript 3',
+          body: 'Описание поста 3',
+        }
+      ],
+      title: '',
+      body: ''
     }
   },
   methods: {
-    addLike() {
-      this.likes += 1;
+    createPost() {
+      const newPost = {
+        id: Date.now(), //текущая дата
+        title: this.title,
+        body: this.body,
+      }
+      this.posts.push(newPost);
+      this.title = '';
+      this.body = '';
     },
-    addDislike(){
-      this.dislikes += 1;
-    }
   }
 }
 </script>
 
 <style>
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.app {
+  padding: 20px;
+}
 
 </style>
