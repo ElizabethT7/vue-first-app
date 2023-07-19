@@ -1,16 +1,14 @@
 <template>
-  <form @submit.prevent> /*отменяем действие по умолчанию*/
+  <form @submit.prevent>
     <h4>Создание поста</h4>
     <input
-        v-bind:value='post.title'
-        @input='inputTitle'
+        v-model='post.title'
         class='post__input'
         type='text'
         placeholder='Название'
       >  
       <input
-        v-bind:value='post.body'
-        @input='post.body = $event.target.value'
+        v-model='post.body'
         class='post__input'
         type='text'
         placeholder='Описание'
@@ -30,6 +28,14 @@ export default {
     }
   },
   methods: {
+    createPost() {
+      this.post.id = Date.now();
+      this.$emit('create', this.post, 'second param', ' 3 param');
+      this.post = {
+        title: '',
+        body: '',
+      }
+    },
     inputTitle(event){
       this.post.title = event.target.value;
     }

@@ -1,7 +1,11 @@
 <template>
   <div class='app'>
-    <PostForm />
-    <post-list v-bind:posts='posts'/>
+    <PostForm
+    @create='createPost'
+    />
+    <post-list
+      :posts='posts'
+    />
   </div>
 </template>
 
@@ -32,21 +36,12 @@ export default {
           body: 'Описание поста 3',
         }
       ],
-      title: '',
-      body: ''
     }
   },
   methods: {
-    createPost() {
-      const newPost = {
-        id: Date.now(), //текущая дата
-        title: this.title,
-        body: this.body,
-      }
-      this.posts.push(newPost);
-      this.title = '';
-      this.body = '';
-    },
+    createPost(post) {
+      this.posts.push(post);
+    }
   }
 }
 </script>
