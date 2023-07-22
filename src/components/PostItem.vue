@@ -21,12 +21,7 @@
 </template>
 
 <script>
-import CustomButton from '@/components/UI/CustomButton';
-
 export default {
-  components: {
-    CustomButton
-  },
   props: {
     post: {
       type: Object,

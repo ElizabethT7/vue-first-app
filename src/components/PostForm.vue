@@ -1,18 +1,19 @@
 <template>
   <form @submit.prevent>
     <h4>Создание поста</h4>
-    <input
+    <custom-input
         v-model='post.title'
+        v-model:value='post.title'
         class='post__input'
         type='text'
         placeholder='Название'
-      >  
-      <input
+      />  
+      <custom-input
         v-model='post.body'
         class='post__input'
         type='text'
         placeholder='Описание'
-      >
+      />
       <custom-button class='form__button' @click='createPost'>Создать</custom-button>
   </form>  
 </template>
@@ -50,10 +51,6 @@ form {
 }
 
 .post__input{
-  width: 100%;
-  border: 1px solid teal;
-  border-radius: 5px;
-  padding: 10px 15px;
   margin-top: 6px;
 }
 
