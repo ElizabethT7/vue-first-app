@@ -15,13 +15,18 @@
       </div>
     </div>
     <div class='post__buttons'>
-      <button>Удалить</button>
+      <custom-button>Удалить</custom-button>
     </div>
   </div>
 </template>
 
 <script>
+import CustomButton from '@/components/UI/CustomButton';
+
 export default {
+  components: {
+    CustomButton
+  },
   props: {
     post: {
       type: Object,

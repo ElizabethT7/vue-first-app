@@ -13,7 +13,7 @@
         type='text'
         placeholder='Описание'
       >
-      <button class='button' @click='createPost'>Создать</button>
+      <custom-button class='form__button' @click='createPost'>Создать</custom-button>
   </form>  
 </template>
 
@@ -57,14 +57,8 @@ form {
   margin-top: 6px;
 }
 
-.button {
+.form__button {
   margin-top: 10px;
   align-self: flex-end;
-  padding: 10px 15px;
-  background: none;
-  color: teal;
-  border: 1px solid teal;
-  border-radius: 5px;
-  cursor: pointer;
 }
 </style>
