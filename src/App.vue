@@ -1,8 +1,16 @@
 <template>
   <div class='app'>
-    <post-form
-    @create='createPost'
-    />
+    <h1>
+      Страница с постами
+    </h1>
+    <custom-button class='post__button' @click='showDialog'>
+      Создать пост
+    </custom-button>
+    <custom-dialog v-model:show='dialogVisible'>
+      <post-form
+        @create='createPost'
+      />
+    </custom-dialog>
     <post-list
       :posts='posts'
       @remove='removePost'
@@ -37,14 +45,19 @@ export default {
           body: 'Описание поста 3',
         }
       ],
+      dialogVisible: false,
     }
   },
   methods: {
     createPost(post) {
       this.posts.push(post);
+      this.dialogVisible = false;
     },
     removePost(post) {
       this.posts = this.posts.filter(p => p.id !== post.id)
+    },
+    showDialog() {
+      this.dialogVisible = true;
     }
   }
 }
@@ -60,6 +73,10 @@ export default {
 
 .app {
   padding: 20px;
+}
+
+.post__button {
+  margin: 20px 0;
 }
 
 </style>
