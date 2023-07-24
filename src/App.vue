@@ -45,7 +45,7 @@ export default {
       sortOptions: [
         {value: 'title', name: 'По названию'},
         {value: 'body', name: 'По описанию'},
-        {value: 'id', name: 'По номеру'}
+        //{value: 'id', name: 'По номеру'}
       ]
     }
   },
@@ -75,13 +75,13 @@ export default {
   mounted() {
     this.fetchPosts();
   },
-  watch: {
+  watch: { //мутирует исходный масив
     selectedSort(newValue) {
       console.log(newValue);
+      this.posts.sort((post, postNext) => {
+        return post[newValue]?.localeCompare(postNext[newValue])
+      })
     },
-    dialogVisible(newValue) {
-      console.log(newValue);
-    }
   }
 }
 </script>
