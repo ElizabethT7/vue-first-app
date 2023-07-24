@@ -39,6 +39,14 @@ export default {
     inputTitle(event){
       this.post.title = event.target.value;
     }
+  },
+  watch: {
+    post: {
+      handler(newValue) {
+        console.log(newValue);
+      },
+      deep: true
+    }
   }
 }
 </script>

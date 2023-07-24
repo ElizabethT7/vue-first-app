@@ -3,9 +3,16 @@
     <h1>
       Страница с постами
     </h1>
-    <custom-button class='post__button' @click='showDialog'>
-      Создать пост
-    </custom-button>
+    <div class="app__buttons">
+      <custom-button @click='showDialog'>
+        Создать пост
+      </custom-button>
+      <custom-select
+        v-model='selectedSort'
+        :options='sortOptions'
+      >
+      </custom-select>
+    </div>
     <custom-dialog v-model:show='dialogVisible'>
       <post-form
         @create='createPost'
@@ -24,17 +31,22 @@
 import axios from 'axios';
 import PostForm from '@/components/PostForm';
 import PostList from '@/components/PostList';
-import CustomButton from '@/components/UI/CustomButton';
 
 export default {
   components: {
-    PostForm, PostList, CustomButton
+    PostForm, PostList
   },
   data() {
     return {
       posts: [],
       dialogVisible: false,
       loading: false,
+      selectedSort: '',
+      sortOptions: [
+        {value: 'title', name: 'По названию'},
+        {value: 'body', name: 'По описанию'},
+        {value: 'id', name: 'По номеру'}
+      ]
     }
   },
   methods: {
@@ -62,6 +74,14 @@ export default {
   },
   mounted() {
     this.fetchPosts();
+  },
+  watch: {
+    selectedSort(newValue) {
+      console.log(newValue);
+    },
+    dialogVisible(newValue) {
+      console.log(newValue);
+    }
   }
 }
 </script>
@@ -78,7 +98,9 @@ export default {
   padding: 20px;
 }
 
-.post__button {
+.app__buttons {
+  display: flex;
+  justify-content: space-between;
   margin: 20px 0;
 }
 
