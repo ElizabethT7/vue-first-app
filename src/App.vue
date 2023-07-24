@@ -3,6 +3,8 @@
     <h1>
       Страница с постами
     </h1>
+    <input type='text' v-model.trim='modificatorValue'>
+    <input type='text' v-model.number='modificatorValue'>
     <custom-button class='post__button' @click='showDialog'>
       Создать пост
     </custom-button>
@@ -46,6 +48,7 @@ export default {
         }
       ],
       dialogVisible: false,
+      modificatorValue: '',
     }
   },
   methods: {
