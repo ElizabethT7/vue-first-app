@@ -3,9 +3,6 @@
     <h1>
       Страница с постами
     </h1>
-    <custom-button @click='fetchPosts' type='text' v-model.number='modificatorValue'>
-      Получить посты
-    </custom-button>
     <custom-button class='post__button' @click='showDialog'>
       Создать пост
     </custom-button>
@@ -17,7 +14,9 @@
     <post-list
       :posts='posts'
       @remove='removePost'
+      v-if='!loading'
     />
+    <div v-else>Идет загрузка...</div>
   </div>
 </template>
 
@@ -35,7 +34,7 @@ export default {
     return {
       posts: [],
       dialogVisible: false,
-      modificatorValue: '',
+      loading: false,
     }
   },
   methods: {
@@ -51,12 +50,18 @@ export default {
     },
     async fetchPosts() {
       try {
+        this.loading = true;
         const response = await axios.get('https://jsonplaceholder.typicode.com/posts?_limit=10');
         this.posts = response.data;
       } catch(e) {
         console.log('Ошибка')
+      } finally {
+        this.loading = false;
       }
-    }
+    },
+  },
+  mounted() {
+    this.fetchPosts();
   }
 }
 </script>
