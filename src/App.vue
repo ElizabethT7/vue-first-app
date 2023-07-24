@@ -19,7 +19,7 @@
       />
     </custom-dialog>
     <post-list
-      :posts='posts'
+      :posts='sortedPosts'
       @remove='removePost'
       v-if='!loading'
     />
@@ -75,14 +75,13 @@ export default {
   mounted() {
     this.fetchPosts();
   },
-  watch: { //мутирует исходный масив
-    selectedSort(newValue) {
-      console.log(newValue);
-      this.posts.sort((post, postNext) => {
-        return post[newValue]?.localeCompare(postNext[newValue])
+  computed: { //не мутирует
+    sortedPosts() {
+      return [...this.posts].sort((post, postNext) => {
+        return post[this.selectedSort]?.localeCompare(postNext[this.selectedSort])
       })
-    },
-  }
+    }
+  },
 }
 </script>
 
