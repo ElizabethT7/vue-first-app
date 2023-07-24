@@ -3,8 +3,9 @@
     <h1>
       Страница с постами
     </h1>
-    <input type='text' v-model.trim='modificatorValue'>
-    <input type='text' v-model.number='modificatorValue'>
+    <custom-button @click='fetchPosts' type='text' v-model.number='modificatorValue'>
+      Получить посты
+    </custom-button>
     <custom-button class='post__button' @click='showDialog'>
       Создать пост
     </custom-button>
@@ -21,32 +22,18 @@
 </template>
 
 <script>
+import axios from 'axios';
 import PostForm from '@/components/PostForm';
 import PostList from '@/components/PostList';
+import CustomButton from '@/components/UI/CustomButton';
 
 export default {
   components: {
-    PostForm, PostList
+    PostForm, PostList, CustomButton
   },
   data() {
     return {
-      posts: [
-        {
-          id: 1,
-          title: 'Javascript',
-          body: 'Описание поста',
-        },
-        {
-          id: 2,
-          title: 'Javascript 2',
-          body: 'Описание поста 2',
-        },
-        {
-          id: 3,
-          title: 'Javascript 3',
-          body: 'Описание поста 3',
-        }
-      ],
+      posts: [],
       dialogVisible: false,
       modificatorValue: '',
     }
@@ -61,6 +48,14 @@ export default {
     },
     showDialog() {
       this.dialogVisible = true;
+    },
+    async fetchPosts() {
+      try {
+        const response = await axios.get('https://jsonplaceholder.typicode.com/posts?_limit=10');
+        this.posts = response.data;
+      } catch(e) {
+        console.log('Ошибка')
+      }
     }
   }
 }
