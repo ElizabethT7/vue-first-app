@@ -15,7 +15,11 @@
       </div>
     </div>
     <div class='post__buttons'>
-      <custom-button>Удалить</custom-button>
+      <custom-button
+        @click="$emit('remove', post)"
+      >
+        Удалить
+      </custom-button>
     </div>
   </div>
 </template>

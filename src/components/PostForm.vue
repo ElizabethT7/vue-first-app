@@ -3,7 +3,6 @@
     <h4>Создание поста</h4>
     <custom-input
         v-model='post.title'
-        v-model:value='post.title'
         class='post__input'
         type='text'
         placeholder='Название'
