@@ -28,7 +28,8 @@
       v-if='!loading'
     />
     <div v-else>Идет загрузка...</div>
-    <div class='page__wrapper'>
+    <div ref='observer' class='observer'></div>
+<!--<div class='page__wrapper'>
       <div
         v-for='pageNumber in totalPage'
         :key='pageNumber'
@@ -40,7 +41,7 @@
       >
         {{ pageNumber }}
       </div>
-    </div>
+    </div>-->
   </div>
 </template>
 
@@ -81,10 +82,10 @@ export default {
     showDialog() {
       this.dialogVisible = true;
     },
-    changePage(pageNumber) {
+    /*changePage(pageNumber) {
       this.page = pageNumber;
       this.fetchPosts()
-    },
+    },*/
     async fetchPosts() {
       try {
         this.loading = true;
@@ -102,9 +103,43 @@ export default {
         this.loading = false;
       }
     },
+    async loadMorePosts() {
+      try {
+        this.page += 1;
+        const response = await axios.get('https://jsonplaceholder.typicode.com/posts', {
+          params: {
+            _page: this.page,
+            _limit: this.limit
+          }
+        });
+        this.totalPage = Math.ceil(response.headers['x-total-count'] / this.limit);
+        this.posts = [...this.posts, ...response.data];
+      } catch(e) {
+        console.log('Ошибка')
+      }
+    },
   },
   mounted() {
     this.fetchPosts();
+    //this.$refs.observer
+    let options = {
+      rootMargin: "0px",
+      threshold: 1.0,
+    };
+    let callback = (entries) => {
+      console.log('пересечение');
+      console.log(entries);
+      if(entries[0].isIntersecting && this.page < this.totalPage) {
+        console.log('пересечен');
+        this.loadMorePosts(); //если использовать function(131 стр) произойдет потеря контекста
+      }
+      /*entries.forEach((entry) => {
+
+      });*/
+    };
+
+    let observer = new IntersectionObserver(callback, options);
+    observer.observe(this.$refs.observer);
   },
   computed: { //не мутирует
     sortedPosts() {
@@ -117,9 +152,9 @@ export default {
     }
   },
   watch: {
-    page() {
+    /*page() {
       this.fetchPosts();
-    }
+    }*/
   }
 }
 </script>
@@ -165,6 +200,11 @@ h1 {
   border: 1px solid teal;
   background-color: teal;
   color: white;
+}
+
+.observer {
+  height: 30px;
+  background: gray;
 }
 
 </style>
