@@ -3,6 +3,10 @@
     <h1>
       Страница с постами
     </h1>
+    <custom-input
+    v-model='searchQuery'
+    placeholder="Поиск..."
+    />
     <div class="app__buttons">
       <custom-button @click='showDialog'>
         Создать пост
@@ -19,7 +23,7 @@
       />
     </custom-dialog>
     <post-list
-      :posts='sortedPosts'
+      :posts='sortedAndSearchedPosts'
       @remove='removePost'
       v-if='!loading'
     />
@@ -42,6 +46,7 @@ export default {
       dialogVisible: false,
       loading: false,
       selectedSort: '',
+      searchQuery: '',
       sortOptions: [
         {value: 'title', name: 'По названию'},
         {value: 'body', name: 'По описанию'},
@@ -80,6 +85,9 @@ export default {
       return [...this.posts].sort((post, postNext) => {
         return post[this.selectedSort]?.localeCompare(postNext[this.selectedSort])
       })
+    },
+    sortedAndSearchedPosts() {
+      return this.sortedPosts.filter(post => post.title.toLowerCase().includes(this.searchQuery.toLowerCase()))
     }
   },
 }
