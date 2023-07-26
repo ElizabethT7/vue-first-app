@@ -1,0 +1,24 @@
+<template>
+  <div @click="$router.push('/')" class='navbar'>
+    <div >Vue 3</div>
+    <div class='navbar__btns'>
+      <custom-button @click="$router.push('/posts')">Посты</custom-button>
+      <custom-button @click="$router.push('/about')" style='margin-left: 10px'>О сайте</custom-button>
+    </div>
+  </div>
+</template>
+
+<style scoped>
+.navbar {
+  height: 50px;
+  background-color: lightgray;
+  box-shadow:  2px 2px 4px gray;
+  display: flex;
+  align-items: center;
+  padding: 0 15px;
+}
+
+.navbar__btns {
+  margin-left: auto;
+}
+</style>
