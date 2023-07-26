@@ -6,6 +6,7 @@
     <custom-input
     v-model='searchQuery'
     placeholder="Поиск..."
+    v-focus
     />
     <div class="app__buttons">
       <custom-button @click='showDialog'>
@@ -28,7 +29,7 @@
       v-if='!loading'
     />
     <div v-else>Идет загрузка...</div>
-    <div ref='observer' class='observer'></div>
+    <div v-intersection="loadMorePosts" class='observer'></div>
 <!--<div class='page__wrapper'>
       <div
         v-for='pageNumber in totalPage'
@@ -121,7 +122,7 @@ export default {
   },
   mounted() {
     this.fetchPosts();
-    let options = {
+    /*let options = {
       rootMargin: "0px",
       threshold: 1.0,
     };
@@ -135,7 +136,7 @@ export default {
     };
 
     let observer = new IntersectionObserver(callback, options);
-    observer.observe(this.$refs.observer);
+    observer.observe(this.$refs.observer);*/
   },
   computed: { //не мутирует
     sortedPosts() {

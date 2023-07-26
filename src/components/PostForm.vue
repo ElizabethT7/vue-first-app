@@ -2,18 +2,19 @@
   <form @submit.prevent>
     <h4>Создание поста</h4>
     <custom-input
-        v-model='post.title'
-        class='post__input'
-        type='text'
-        placeholder='Название'
-      />  
-      <custom-input
-        v-model='post.body'
-        class='post__input'
-        type='text'
-        placeholder='Описание'
-      />
-      <custom-button class='form__button' @click='createPost'>Создать</custom-button>
+      v-focus
+      v-model='post.title'
+      class='post__input'
+      type='text'
+      placeholder='Название'
+    />  
+    <custom-input
+      v-model='post.body'
+      class='post__input'
+      type='text'
+      placeholder='Описание'
+    />
+    <custom-button class='form__button' @click='createPost'>Создать</custom-button>
   </form>  
 </template>
 
