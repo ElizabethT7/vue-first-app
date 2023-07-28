@@ -1,13 +1,5 @@
 <template>
   <div>
-<!--    <h2>{{ $store.state.isAuth ?  'Пользователь авторизован' : 'Авторизуйтесь' }}</h2>
-    <h2>{{ $store.state.likes }}</h2>
-    <h2>{{ $store.getters.doubleLikes }}</h2>
-    <div>
-      <custom-button @click="$store.commit('incrementLikes')">Лайк</custom-button>
-      <custom-button @click="$store.commit('decrementLikes')">Дизлайк</custom-button>
-    </div>
--->
     <h1>
       Страница с постами
     </h1>
@@ -61,7 +53,7 @@ export default {
     ...mapMutations({
       setPage: 'post/setPage',
       setSearchQuery: 'post/setSearchQuery',
-      setSelectedSort: 'post/setSelectedSort'
+      setSelectedSort: 'post/setSelectedSort',
     }),
     ...mapActions({
       loadMorePosts: 'post/loadMorePosts',
@@ -79,7 +71,7 @@ export default {
     },
   },
   mounted() {
-    this.fetchPosts();
+    //this.fetchPosts();
   },
   computed: {
     ...mapState({
@@ -94,7 +86,7 @@ export default {
     }),
     ...mapGetters({
       sortedPost: 'post/sortedPost',
-      sortedAndSearchedPosts: 'post/sortedAndSearchedPosts'
+      sortedAndSearchedPosts: 'post/sortedAndSearchedPosts',
     })
   }
 }
