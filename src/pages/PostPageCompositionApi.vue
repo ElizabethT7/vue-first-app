@@ -3,9 +3,7 @@
     <h1>
       Страница с постами
     </h1>
-    <h2>{{ likes }}</h2>
-    <custom-button @click="addLike">Like</custom-button>
-<!--    <custom-input
+    <custom-input
     v-model='searchQuery'
     placeholder="Поиск..."
     v-focus
@@ -22,23 +20,22 @@
     </div>
     <custom-dialog v-model:show='dialogVisible'>
       <post-form
-        @create='createPost'
       />
     </custom-dialog>
     <post-list
       :posts='sortedAndSearchedPosts'
-      @remove='removePost'
       v-if='!loading'
     />
     <div v-else>Идет загрузка...</div>
-    <div v-intersection="loadMorePosts" class='observer'></div>-->
   </div>
 </template>
 
 <script>
-import {ref} from 'vue';
 import PostForm from '@/components/PostForm';
 import PostList from '@/components/PostList';
+import usePosts from '@/hooks/usePosts';
+import useSortedPosts from '@/hooks/useSortedPosts';
+import useSortedAndSearchedPosts from '@/hooks/useSortedAndSearchedPosts';
 
 export default {
   components: {
@@ -54,16 +51,19 @@ export default {
       ]
     }
   },
-  setup(props) {
-    const likes = ref(2);
-    console.log(likes)
-    const addLike = () => {
-      likes.value += 1;
-    }
+  setup() {
+    const {posts, totalPage, loading} = usePosts(10);
+    const {sortedPosts, selectedSort} = useSortedPosts(posts);
+    const {searchQuery, sortedAndSearchedPosts} = useSortedAndSearchedPosts(sortedPosts);
 
     return {
-      likes,
-      addLike
+      posts,
+      totalPage,
+      loading,
+      sortedPosts,
+      selectedSort,
+      searchQuery,
+      sortedAndSearchedPosts,
     };
   }
 }
